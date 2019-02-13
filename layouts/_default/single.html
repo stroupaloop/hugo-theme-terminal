@@ -1,9 +1,11 @@
 {{ define "main" }}
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
   <div class="post">
     <h1 class="post-title"><a href="{{ .Permalink }}">{{ .Title | markdownify }}</a></h1>
     <div class="post-meta">
       <span class="post-date">
-        {{ .Date.Format "2006-01-02" }}
+        Week of {{ .Date.Format "January 2, 2006" }}
       </span>
       {{ with .Params.Author }}<span class="post-author">:: {{ . }}</span>{{ end }}
     </div>
@@ -21,7 +23,38 @@
     {{ end }}
 
     <div class="post-content">
+      <canvas id="myChart"></canvas>
+      <ul>
+        <li>AVERAGE: {{ .Params.average }}</li>
+        <li>HIGH: {{ .Params.high }}</li>
+        <li>LOW: {{ .Params.low }}</li>
+      </ul>
       {{ .Content }}
+      <script>
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var chart = new Chart(ctx, {
+            // The type of chart we want to create
+            type: 'line',
+
+            // The data for our dataset
+            data: {
+                labels: ["Monday", "Tuesday", ,"Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+                datasets: [{
+                    label: "Weekly Feels",
+                    backgroundColor: 'rgb(255, 99, 132)',
+                    borderColor: 'rgb(255, 99, 132)',
+                    data: [0, 10, 5, 2, 20, 30, {{ .Params.test1 }}, {{ .Params.test2 }} ],
+                }]
+            },
+
+            // Configuration options go here
+            options: {
+              legend: {
+                display: false
+              }
+            }
+        });
+      </script>
     </div>
     {{ if or .NextInSection .PrevInSection }}
       <div class="pagination">

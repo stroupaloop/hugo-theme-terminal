@@ -6,19 +6,20 @@
 <link rel="canonical" href="{{ .Permalink }}" />
 
 <!-- Theme CSS -->
-<link rel="stylesheet" href="{{ "assets/style.css" | absURL }}">
+<link rel="stylesheet" href="{{ "assets/style.css" | absURL }}" type="text/css">
 {{ if (ne $.Site.Params.ThemeColor "orange") }}
   <link rel="stylesheet" href="{{ (printf "assets/%s.css" $.Site.Params.ThemeColor) | absURL }}">
 {{ end }}
 
 <!-- Custom CSS to override theme properties (/static/style.css) -->
-<link rel="stylesheet" href="{{ "style.css" | absURL }}">
+<!-- <link rel="stylesheet" href="{{ "style.css" | absURL }}" type="text/css"> -->
 
 <!-- Icons -->
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ "img/apple-touch-icon-144-precomposed.png" | absURL }}">
 {{ with $.Site.Params.ThemeColor }}
   <link rel="shortcut icon" href="{{ printf "img/favicon/%s.png" . | absURL }}">
 {{ end }}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary" />
