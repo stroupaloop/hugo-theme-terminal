@@ -1,5 +1,6 @@
 {{ define "main" }}
-  <div class="posts">
+  <img src="/img/cartoon-drake.jpg" style="display:block;height:100%;width:100%;max-width:400px;max-height:400px;margin-top:50px">
+  <!-- <div class="posts">
     {{ $isntDefault := not (or (eq (trim $.Site.Params.contentTypeName " ") "posts") (eq (trim $.Site.Params.contentTypeName " ") "")) }}
     {{ $contentTypeName := cond $isntDefault (string $.Site.Params.contentTypeName) "posts" }}
     {{ $paginator := .Paginate (where .Data.Pages "Type" $contentTypeName) }}
@@ -39,5 +40,5 @@
     </div>
     {{ end }}
     {{ partial "pagination.html" . }}
-  </div>
+  </div> -->
 {{ end }}
