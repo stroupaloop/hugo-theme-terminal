@@ -1,5 +1,6 @@
 {{ define "main" }}
-
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.23.0/moment.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
   <div class="post">
     <h1 class="post-title"><a href="{{ .Permalink }}">{{ .Title | markdownify }}</a></h1>
@@ -25,10 +26,10 @@
     <div class="post-content">
       <canvas id="myChart"></canvas>
       <ul>
-        <li>TOTAL: {{ .Params.total }}</li>
+        <li>RESPONSE: {{ .Params.total }}</li>
         <li>AVERAGE: {{ .Params.average }}</li>
-        <li>HIGH: {{ .Params.high }}</li>
-        <li>LOW: {{ .Params.low }}</li>
+        <li>HIGH: {{ .Params.high }} ({{ .Params.high_count }} time{{ if gt .Params.high_count 1 }}s{{ end }})</li>
+        <li>LOW: {{ .Params.low }} ({{ .Params.low_count }} time{{ if gt .Params.low_count 1 }}s{{ end }})</li>
       </ul>
       {{ .Content }}
       <script>
@@ -39,19 +40,60 @@
 
             // The data for our dataset
             data: {
-                labels: ["Monday", "Tuesday", ,"Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+                labels: {{ $.Params.test1 }},
+                // labels: [new Date(2017, 08, 16), new Date(2017, 08, 17), new Date(2017, 08, 18)],
                 datasets: [{
+                    fill: false,
                     label: "Weekly Feels",
-                    backgroundColor: 'rgb(255, 99, 132)',
-                    borderColor: 'rgb(255, 99, 132)',
-                    data: [0, 10, 5, 2, 20, 30, {{ .Params.test1 }}, {{ .Params.test2 }} ],
+                    backgroundColor: 'rgb(54, 127, 247)',
+                    borderColor: 'rgb(122, 172, 255)',
+                    data: {{ $.Params.test2 }}
                 }]
             },
 
             // Configuration options go here
             options: {
+              fill: false,
+              responsive: true,
               legend: {
                 display: false
+              },
+              tooltips: { 
+               callbacks: {
+                label: function(tooltipItem, data) {
+                  return "Feels: " + tooltipItem.yLabel;
+                  },
+                }
+              },
+              scales: {
+                yAxes: [{
+                  display: true,
+                  ticks: {
+                    max: 10,
+                    min: 0
+                  },
+                  scaleLabel: {
+                    display: false,
+                    labelString: "Page Views"
+                  }
+                }],
+                xAxes: [{
+                  type: 'time',
+                  display: true,
+                  scaleLabel: {
+                    display: false,
+                    labelString: "Date"
+                  },
+                  distribution: 'linear',
+                  time: {
+                    displayFormats: {
+                      day: 'MMM D'
+                    },
+                    isoWeekday: false,
+                    unit: 'day',
+                    tooltipFormat: 'ddd, h:mm a'
+                  }
+                }]
               }
             }
         });
