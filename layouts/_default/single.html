@@ -3,10 +3,13 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.23.0/moment.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
   <div class="post">
-    <h1 class="post-title"><a href="{{ .Permalink }}">{{ .Title | markdownify }}</a></h1>
+    <h1 class="post-title">
+      Week of {{ .Date.Format "January 2, 2006" }}
+      <!-- <a href="{{ .Permalink }}">{{ .Title | markdownify }}</a> -->
+    </h1>
     <div class="post-meta">
       <span class="post-date">
-        Week of {{ .Date.Format "January 2, 2006" }}
+        <!-- Week of {{ .Date.Format "January 2, 2006" }} -->
       </span>
       {{ with .Params.Author }}<span class="post-author">:: {{ . }}</span>{{ end }}
     </div>
@@ -87,11 +90,14 @@
                   distribution: 'linear',
                   time: {
                     displayFormats: {
-                      day: 'MMM D'
+                      day: 'ddd, M/D'
                     },
                     isoWeekday: false,
                     unit: 'day',
                     tooltipFormat: 'ddd, h:mm a'
+                  },
+                  gridLines: {
+                    color: "rgb(255,255,255,0.3)"
                   }
                 }]
               }
