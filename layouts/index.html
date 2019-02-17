@@ -1,0 +1,5 @@
+{{ define "main" }}
+	{{ if eq (relURL .URL) ("/" | safeHTML) }}
+		<img src="/img/cartoon-drake.jpg" style="display:block;height:100%;width:100%;max-width:400px;max-height:400px;margin-top:50px">
+	{{ end }}
+{{ end }}
