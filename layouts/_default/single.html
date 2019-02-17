@@ -43,14 +43,14 @@
 
             // The data for our dataset
             data: {
-                labels: {{ $.Params.test1 }},
+                labels: {{ $.Params.timestamp }},
                 // labels: [new Date(2017, 08, 16), new Date(2017, 08, 17), new Date(2017, 08, 18)],
                 datasets: [{
                     fill: false,
                     label: "Weekly Feels",
                     backgroundColor: 'rgb(54, 127, 247)',
                     borderColor: 'rgb(122, 172, 255)',
-                    data: {{ $.Params.test2 }}
+                    data: {{ $.Params.feelings }}
                 }]
             },
 
