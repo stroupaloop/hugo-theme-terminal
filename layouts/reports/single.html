@@ -1,0 +1,135 @@
+{{ define "main" }}
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.23.0/moment.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+  <div class="post">
+    <h1 class="post-title">
+      Week of {{ .Date.Format "January 2, 2006" }}
+      <!-- <a href="{{ .Permalink }}">{{ .Title | markdownify }}</a> -->
+    </h1>
+    <div class="post-meta">
+      <span class="post-date">
+        <!-- Week of {{ .Date.Format "January 2, 2006" }} -->
+      </span>
+      {{ with .Params.Author }}<span class="post-author">:: {{ . }}</span>{{ end }}
+    </div>
+
+    {{ if .Params.tags }}
+      <span class="post-tags">
+        {{ range .Params.tags }}
+          #<a href="{{ (urlize (printf "tags/%s" .)) | absURL }}">{{ . }}</a>&nbsp;
+        {{ end }}
+      </span>
+    {{ end }}
+
+    {{ with .Params.Cover }}
+      <img src="{{ . | absURL }}" class="post-cover" />
+    {{ end }}
+
+    <div class="post-content">
+      <canvas id="myChart"></canvas>
+      <ul>
+        <li>RESPONSE: {{ .Params.total }}</li>
+        <li>AVERAGE: {{ .Params.average }}</li>
+        <li>HIGH: {{ .Params.high }} ({{ .Params.high_count }} time{{ if gt .Params.high_count 1 }}s{{ end }})</li>
+        <li>LOW: {{ .Params.low }} ({{ .Params.low_count }} time{{ if gt .Params.low_count 1 }}s{{ end }})</li>
+      </ul>
+      {{ .Content }}
+      <script>
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var chart = new Chart(ctx, {
+            // The type of chart we want to create
+            type: 'line',
+
+            // The data for our dataset
+            data: {
+                labels: {{ $.Params.timestamp }},
+                // labels: [new Date(2017, 08, 16), new Date(2017, 08, 17), new Date(2017, 08, 18)],
+                datasets: [{
+                    fill: false,
+                    label: "Weekly Feels",
+                    backgroundColor: 'rgb(54, 127, 247)',
+                    borderColor: 'rgb(122, 172, 255)',
+                    data: {{ $.Params.feelings }}
+                }]
+            },
+
+            // Configuration options go here
+            options: {
+              fill: false,
+              responsive: true,
+              legend: {
+                display: false
+              },
+              tooltips: { 
+               callbacks: {
+                label: function(tooltipItem, data) {
+                  return "Feels: " + tooltipItem.yLabel;
+                  },
+                }
+              },
+              scales: {
+                yAxes: [{
+                  display: true,
+                  ticks: {
+                    max: 10,
+                    min: 0
+                  },
+                  scaleLabel: {
+                    display: false,
+                    labelString: "Page Views"
+                  }
+                }],
+                xAxes: [{
+                  type: 'time',
+                  display: true,
+                  scaleLabel: {
+                    display: false,
+                    labelString: "Date"
+                  },
+                  distribution: 'linear',
+                  time: {
+                    displayFormats: {
+                      day: 'ddd, M/D'
+                    },
+                    isoWeekday: false,
+                    unit: 'day',
+                    tooltipFormat: 'ddd, h:mm a'
+                  },
+                  gridLines: {
+                    color: "rgb(255,255,255,0.3)"
+                  }
+                }]
+              }
+            }
+        });
+      </script>
+    </div>
+    <!-- {{ if or .NextInSection .PrevInSection }}
+      <div class="pagination">
+        <div class="pagination__title">
+          <span class="pagination__title-h">{{ $.Site.Params.ReadOtherPosts }}</span>
+          <hr />
+        </div>
+        <div class="pagination__buttons">
+          {{ if .NextInSection }}
+            <span class="button previous">
+              <a href="{{ .NextInSection.Permalink }}">
+                <span class="button__icon">←</span>
+                <span class="button__text">{{ .NextInSection.Title }}</span>
+              </a>
+            </span>
+          {{ end }}
+          {{ if .PrevInSection }}
+            <span class="button next">
+              <a href="{{ .PrevInSection.Permalink }}">
+                <span class="button__text">{{ .PrevInSection.Title }}</span>
+                <span class="button__icon">→</span>
+              </a>
+            </span>
+          {{ end }}
+        </div>
+      </div>
+    {{ end }} -->
+  </div>
+{{ end }}
