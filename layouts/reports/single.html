@@ -28,20 +28,57 @@
 
     <div class="post-content">
       <canvas id="myChart"></canvas>
+      <br/>
+      <canvas id="hoBar"></canvas>
       <ul>
-        <li>RESPONSE: {{ .Params.total }}</li>
+        <li>RESPONSES: {{ .Params.total }}</li>
         <li>AVERAGE: {{ .Params.average }}</li>
-        <li>HIGH: {{ .Params.high }} ({{ .Params.high_count }} time{{ if gt .Params.high_count 1 }}s{{ end }})</li>
-        <li>LOW: {{ .Params.low }} ({{ .Params.low_count }} time{{ if gt .Params.low_count 1 }}s{{ end }})</li>
+        <li>HIGHEST: {{ .Params.high }} ({{ .Params.high_count }} time{{ if gt .Params.high_count 1 }}s{{ end }})</li>
+        <li>LOWEST: {{ .Params.low }} ({{ .Params.low_count }} time{{ if gt .Params.low_count 1 }}s{{ end }})</li>
       </ul>
+      {{ if (isset .Params "moods") }}
         <p>REASONS:</p>
+        <p>amazing</p>
         <ul>
-          {{ range $index, $val := $.Params.reasons }}
-            {{ if ne $val "" }}
-              <li>{{ index $.Params.monthday $index }}: {{ index $.Params.feelings $index }} > {{ index $.Params.reasons $index }}</li>
-            {{ end }}
+        {{ range $index, $val := $.Params.moods }}
+          {{ if eq $val "amazing" }}
+            <li>{{ index $.Params.monthday $index }}: {{ index $.Params.reasons $index }}</li>
           {{ end }}
-        </ul>
+        {{ end }}
+        <ul>
+        <p>good</p>
+        <ul>
+        {{ range $index, $val := $.Params.moods }}
+          {{ if eq $val "good" }}
+            <li>{{ index $.Params.monthday $index }}: {{ index $.Params.reasons $index }}</li>
+          {{ end }}
+        {{ end }}
+        <ul>
+        <p>ok</p>
+        <ul>
+        {{ range $index, $val := $.Params.moods }}
+          {{ if eq $val "ok" }}
+            <li>{{ index $.Params.monthday $index }}: {{ index $.Params.reasons $index }}</li>
+          {{ end }}
+        {{ end }}
+        <ul>
+        <p>bad</p>
+        <ul>
+        {{ range $index, $val := $.Params.moods }}
+          {{ if eq $val "bad" }}
+            <li>{{ index $.Params.monthday $index }}: {{ index $.Params.reasons $index }}</li>
+          {{ end }}
+        {{ end }}
+        <ul>
+        <p>horrible</p>
+        <ul>
+        {{ range $index, $val := $.Params.moods }}
+          {{ if eq $val "horrible" }}
+            <li>{{ index $.Params.monthday $index }}: {{ index $.Params.reasons $index }}</li>
+          {{ end }}
+        {{ end }}
+        <ul>
+      {{ end }}
       {{ .Content }}
       <script>
         var ctx = document.getElementById('myChart').getContext('2d');
@@ -54,17 +91,21 @@
                 labels: {{ $.Params.timestamp }},
                 // labels: [new Date(2017, 08, 16), new Date(2017, 08, 17), new Date(2017, 08, 18)],
                 datasets: [{
-                    fill: false,
+                    fill: true,
                     label: "Weekly Feels",
-                    backgroundColor: 'rgb(54, 127, 247)',
-                    borderColor: 'rgb(122, 172, 255)',
+                    backgroundColor: 'rgb(255, 168, 106)',
+                    borderColor: 'rgb(202, 110, 6)',
                     data: {{ $.Params.feelings }}
                 }]
             },
 
             // Configuration options go here
             options: {
-              fill: false,
+              title: {
+                display: true,
+                text: 'FEELINGS OVER TIME'
+              },
+              fill: true,
               responsive: true,
               legend: {
                 display: false
@@ -81,7 +122,7 @@
                   display: true,
                   ticks: {
                     max: 10,
-                    min: 0
+                    min: 1
                   },
                   scaleLabel: {
                     display: false,
@@ -107,7 +148,36 @@
                   gridLines: {
                     color: "rgb(255,255,255,0.3)"
                   }
-                }]
+                }],
+              }
+            }
+        });
+        var ctx_bar = document.getElementById('hoBar').getContext('2d');
+        var bar_Chart = new Chart(ctx_bar, {
+            type: 'bar',
+            data: {
+              labels: ["Morning", "Afternoon", "Evening"],
+              datasets: [
+                {
+                  label: "Average Feeelings",
+                  backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f"],
+                  data: [5.2,8.6,7.8]
+                }
+              ]
+            },
+            options: {
+              legend: { display: false },
+              title: {
+                display: true,
+                text: 'THROUGHOUT THE DAY (AVG)'
+              },
+              scales: {
+                  yAxes: [{
+                      ticks: {
+                          max: 10,
+                          min: 1
+                      }
+                  }]
               }
             }
         });
