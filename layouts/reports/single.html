@@ -13,7 +13,12 @@
       </span>
       {{ with .Params.Author }}<span class="post-author">:: {{ . }}</span>{{ end }}
     </div>
-
+    {{ range $index, $val := $.Params.timestamp }}
+            {{ if eq $index 1 }}
+              {{ $start_datetime := $val }}
+              {{ $start_datetime }}
+            {{ end }}
+        {{ end }}
     {{ if .Params.tags }}
       <span class="post-tags">
         {{ range .Params.tags }}
@@ -27,9 +32,9 @@
     {{ end }}
 
     <div class="post-content">
-      <canvas id="myChart"></canvas>
+      <canvas id="myChart" height="150%"></canvas>
       <br/>
-      <canvas id="hoBar"></canvas>
+      <canvas id="hoBar" height="150%"></canvas>
       <ul>
         <li>RESPONSES: {{ .Params.total }}</li>
         <li>AVERAGE: {{ .Params.average }}</li>
