@@ -21,14 +21,14 @@
       </span>
     {{ end }}
 
-    {{ with .Params.Cover }}
+    <!-- {{ with .Params.Cover }}
       <img src="{{ . | absURL }}" class="post-cover" />
-    {{ end }}
+    {{ end }} -->
 
     <div class="post-content">
       <canvas id="myChart" height="150%"></canvas>
       <br/>
-      <canvas id="hoBar" height="150%"></canvas>
+      <!-- <canvas id="hoBar" height="150%"></canvas> -->
       <ul>
         <li>RESPONSES: {{ .Params.total }}</li>
         <li>AVERAGE: {{ .Params.average }}</li>
@@ -36,8 +36,10 @@
         <li>LOWEST: {{ .Params.low }} ({{ .Params.low_count }} time{{ if gt .Params.low_count 1 }}s{{ end }})</li>
       </ul>
       {{ if (isset .Params "moods") }}
-        <p>REASONS:</p>
-        <p>amazing</p>
+        <p>YOUR FEELINGS THIS WEEK (range: 1 to 10):</p>
+        {{ if in $.Params.moods "amazing" }}
+          <p>amazing (9 to 10)</p>
+        {{ end }}
         <ul>
         {{ range $index, $val := $.Params.moods }}
           {{ if eq $val "amazing" }}
@@ -45,7 +47,9 @@
           {{ end }}
         {{ end }}
         </ul>
-        <p>good</p>
+        {{ if in $.Params.moods "good" }}
+          <p>good (7 to 8)</p>
+        {{ end }}
         <ul>
         {{ range $index, $val := $.Params.moods }}
           {{ if eq $val "good" }}
@@ -53,7 +57,9 @@
           {{ end }}
         {{ end }}
         </ul>
-        <p>ok</p>
+        {{ if in $.Params.moods "ok" }}
+          <p>ok (5 to 6)</p>
+        {{ end }}
         <ul>
         {{ range $index, $val := $.Params.moods }}
           {{ if eq $val "ok" }}
@@ -61,7 +67,9 @@
           {{ end }}
         {{ end }}
         </ul>
-        <p>bad</p>
+        {{ if in $.Params.moods "bad" }}
+          <p>bad (3 to 4)</p>
+        {{ end }}
         <ul>
         {{ range $index, $val := $.Params.moods }}
           {{ if eq $val "bad" }}
@@ -69,7 +77,9 @@
           {{ end }}
         {{ end }}
         </ul>
-        <p>horrible</p>
+        {{ if in $.Params.moods "horrible" }}
+          <p>horrible (1 to 2)</p>
+        {{ end }}
         <ul>
         {{ range $index, $val := $.Params.moods }}
           {{ if eq $val "horrible" }}
@@ -90,7 +100,7 @@
                 labels: {{ $.Params.timestamp }},
                 // labels: [new Date(2017, 08, 16), new Date(2017, 08, 17), new Date(2017, 08, 18)],
                 datasets: [{
-                    fill: true,
+                    fill: false,
                     label: "Weekly Feels",
                     backgroundColor: 'rgb(255, 168, 106)',
                     borderColor: 'rgb(202, 110, 6)',
@@ -104,7 +114,7 @@
                 display: true,
                 text: 'FEELINGS OVER TIME'
               },
-              fill: true,
+              fill: false,
               responsive: true,
               legend: {
                 display: false
