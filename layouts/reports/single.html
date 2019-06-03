@@ -13,12 +13,6 @@
       </span>
       {{ with .Params.Author }}<span class="post-author">:: {{ . }}</span>{{ end }}
     </div>
-    {{ range $index, $val := $.Params.timestamp }}
-            {{ if eq $index 1 }}
-              {{ $start_datetime := $val }}
-              {{ $start_datetime }}
-            {{ end }}
-        {{ end }}
     {{ if .Params.tags }}
       <span class="post-tags">
         {{ range .Params.tags }}
