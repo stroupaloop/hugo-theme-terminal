@@ -36,9 +36,9 @@
         <li>LOWEST: {{ .Params.low }} ({{ .Params.low_count }} time{{ if gt .Params.low_count 1 }}s{{ end }})</li>
       </ul>
       {{ if (isset .Params "moods") }}
-        <p>YOUR FEELINGS THIS WEEK (range: 1 to 10):</p>
+        <p>YOUR FEELINGS THIS WEEK:</p>
         {{ if in $.Params.moods "amazing" }}
-          <p>amazing (9 to 10)</p>
+          <p>amazing (9-10)</p>
         {{ end }}
         <ul>
         {{ range $index, $val := $.Params.moods }}
@@ -48,7 +48,7 @@
         {{ end }}
         </ul>
         {{ if in $.Params.moods "good" }}
-          <p>good (7 to 8)</p>
+          <p>good (7-8)</p>
         {{ end }}
         <ul>
         {{ range $index, $val := $.Params.moods }}
@@ -58,7 +58,7 @@
         {{ end }}
         </ul>
         {{ if in $.Params.moods "ok" }}
-          <p>ok (5 to 6)</p>
+          <p>ok (5-6)</p>
         {{ end }}
         <ul>
         {{ range $index, $val := $.Params.moods }}
@@ -68,7 +68,7 @@
         {{ end }}
         </ul>
         {{ if in $.Params.moods "bad" }}
-          <p>bad (3 to 4)</p>
+          <p>bad (3-4)</p>
         {{ end }}
         <ul>
         {{ range $index, $val := $.Params.moods }}
@@ -78,7 +78,7 @@
         {{ end }}
         </ul>
         {{ if in $.Params.moods "horrible" }}
-          <p>horrible (1 to 2)</p>
+          <p>horrible (1-2)</p>
         {{ end }}
         <ul>
         {{ range $index, $val := $.Params.moods }}
@@ -130,12 +130,15 @@
                 yAxes: [{
                   display: true,
                   ticks: {
-                    max: 10,
+                    max: 5,
                     min: 1
                   },
                   scaleLabel: {
                     display: false,
                     labelString: "Page Views"
+                  },
+                  gridLines: {
+                    color: "rgb(255,255,255,0.3)"
                   }
                 }],
                 xAxes: [{
@@ -153,9 +156,6 @@
                     isoWeekday: false,
                     unit: 'day',
                     tooltipFormat: 'ddd, h:mm a'
-                  },
-                  gridLines: {
-                    color: "rgb(255,255,255,0.3)"
                   }
                 }],
               }
