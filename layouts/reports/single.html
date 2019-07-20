@@ -38,7 +38,7 @@
       {{ if (isset .Params "moods") }}
         <p>YOUR FEELINGS THIS WEEK:</p>
         {{ if in $.Params.moods "amazing" }}
-          <p>amazing (5)</p>
+          <p>amazing</p>
         {{ end }}
         <ul>
         {{ range $index, $val := $.Params.moods }}
@@ -48,7 +48,7 @@
         {{ end }}
         </ul>
         {{ if in $.Params.moods "good" }}
-          <p>good (4)</p>
+          <p>good</p>
         {{ end }}
         <ul>
         {{ range $index, $val := $.Params.moods }}
@@ -58,7 +58,7 @@
         {{ end }}
         </ul>
         {{ if in $.Params.moods "ok" }}
-          <p>ok (3)</p>
+          <p>ok</p>
         {{ end }}
         <ul>
         {{ range $index, $val := $.Params.moods }}
@@ -68,7 +68,7 @@
         {{ end }}
         </ul>
         {{ if in $.Params.moods "bad" }}
-          <p>bad (2)</p>
+          <p>bad</p>
         {{ end }}
         <ul>
         {{ range $index, $val := $.Params.moods }}
@@ -78,7 +78,7 @@
         {{ end }}
         </ul>
         {{ if in $.Params.moods "horrible" }}
-          <p>horrible (1)</p>
+          <p>horrible</p>
         {{ end }}
         <ul>
         {{ range $index, $val := $.Params.moods }}
@@ -130,7 +130,6 @@
                 yAxes: [{
                   display: true,
                   ticks: {
-                    max: 5,
                     min: 1
                   },
                   scaleLabel: {
@@ -183,7 +182,6 @@
               scales: {
                   yAxes: [{
                       ticks: {
-                          max: 5,
                           min: 1
                       }
                   }]
